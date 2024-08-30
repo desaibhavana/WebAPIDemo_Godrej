@@ -1,0 +1,55 @@
+﻿@model IEnumerable<Product>
+
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+
+<h2>All Products</h2>
+
+@if (Model != null)
+{
+    <a asp-action="AddProduct" class="btn btn-sm btn-primary">Add Product</a>
+    <a asp-action="GetProduct" class="btn btn-sm btn-warning">Get Product By Id</a>
+ 
+    
+
+    <table class="table table-sm table-striped table-bordered m-2">
+        <thead>
+            <tr>
+                <th>ProductId</th>
+                <th>ProductName</th>
+                <th>Price</th>
+                <th>Qty</th>
+                <th>Update</th>
+                <th>Delete</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (Product product in Model)
+            {
+                <tr>
+                    <td>@product.ProductId</td>
+                    <td>@product.ProductName</td>
+                    <td>@product.Price</td>
+                    <th>@product.Qty</th>
+                    <td>
+                        <a asp-action="UpdateProduct" asp-route-id= "@product.ProductId" class="btn btn-sm btn-info">
+                            Edit
+
+                        </a>
+                    </td>
+
+                    <td>
+                        <form asp-action="DeleteProduct" method="post" onsubmit="return confirm('Do you really want to delete the record?');">
+                            <input type="hidden" value="@product.ProductId" name="ProductId" />
+                            <input type="image" src="/images/delete.png" height="50" width="50" />
+
+                        </form>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,84 @@
+#@WebAPIDemo_Godrej_HostAddress = http://localhost:12186
+@WebAPIDemo_Godrej_HostAddress = http://localhost:12186
+
+
+# View menu ---> other windows ---> endpoint explorer
+# right click on action and select "Generate request"
+
+GET {{WebAPIDemo_Godrej_HostAddress}}/api/demo
+Accept: application/json
+
+
+###
+
+GET {{WebAPIDemo_Godrej_HostAddress}}/api/demo/1
+Accept: application/json
+
+
+###
+
+#  comment - invalid number - 404
+GET {{WebAPIDemo_Godrej_HostAddress}}/api/demo/11
+Accept: application/json
+
+###
+
+POST {{WebAPIDemo_Godrej_HostAddress}}/api/demo
+Content-Type: application/json
+
+"germany"
+
+###
+
+PUT {{WebAPIDemo_Godrej_HostAddress}}/api/demo/5
+Content-Type: application/json
+
+"italy"
+
+###
+
+DELETE {{WebAPIDemo_Godrej_HostAddress}}/api/demo/5
+Accept: application/json
+
+###
+
+
+
+GET {{WebAPIDemo_Godrej_HostAddress}}/api/product
+
+###
+
+GET {{WebAPIDemo_Godrej_HostAddress}}/api/Product/1
+
+###
+
+GET {{WebAPIDemo_Godrej_HostAddress}}/api/Product/501
+
+###
+POST {{WebAPIDemo_Godrej_HostAddress}}/api/product
+Content-Type: application/json
+
+{
+  "productId": 301,
+  "productName": "prod301",
+  "price": 0,
+  "qty": 0
+}
+
+###
+
+PUT {{WebAPIDemo_Godrej_HostAddress}}/api/product/301
+Content-Type: application/json
+
+{
+  "productId": 301,
+  "productName": "prod301",
+  "price": 301,
+  "qty": 301
+}
+
+###
+
+DELETE {{WebAPIDemo_Godrej_HostAddress}}/api/product/203
+
+###

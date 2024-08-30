@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>   
+    <script src="lib/jquery/dist/jquery.min.js"></script>
+</head>
+<body>
+    <h3 class=" text-dark text-center">Product Data - jQuery client</h3>
+
+    <Div>
+        <h3>Display All Products</h3>
+        <table id="productTable">   </table>
+    </Div>
+
+
+    <div>
+        <h3>Add Product</h3>
+        <table>
+            <tr>
+                <td>
+                    <label for="txtPid">Product Id : </label>
+                </td>
+                <td>
+                    <input type="text" id="txtProdid" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtPName">Product Name : </label>
+                </td>
+                <td>
+                    <input type="text" id="txtPName" />
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <label for="txtPrice">Price : </label>
+                </td>
+                <td>
+                    <input type="text" id="txtPrice" />
+                </td>
+            </tr>
+            <tr>
+            <tr>
+                <td>
+                    <label for="txtQty">Qty : </label>
+                </td>
+                <td>
+                    <input type="text" id="txtQty" />
+                </td>
+            </tr>
+            <tr>
+            <td colspan="2" style="text-align:center">
+                <input type="button" value="Add Product" onclick="AddProduct();" />
+              
+            </td>
+
+            </tr>
+        </table>
+
+    </div>
+
+    <script>
+        //on load display all prodcuts
+        $(document).ready(LoadProductDetails());
+
+        function LoadProductDetails() {
+            var url = 'http://localhost:12186/api/product';
+            $.ajax({
+                url: url,
+                dataType: 'json',
+                type: 'GET',
+                success: function (data) {
+                    $('#productTable').empty();
+                    var headerrow = '<tr> <th> ProductId</th> <th> ProductName </th>        <th> Price </th> <th> Qty </th></tr>'
+                    //add header row to table
+                    $('#productTable').append(headerrow)
+                    //itereater records and add into table
+                    $.each(data, function (index, record) {
+                        var row = '<tr> <td>' + record.productId + '</td> <td>' + record.productName + '</td> <td>' + record.price + '</td>  <td>' + record.qty + '</td></tr>'
+                        $('#productTable').append(row)
+                    });
+                }
+            })
+
+        }
+
+
+        function AddProduct() {
+            //read value from respective textboxes
+            var pid = $('#txtProdid').val();
+            var pname = $('#txtPName').val();
+            var cost = $('#txtPrice').val();
+            var qty = $('#txtQty').val();
+
+            var product = { ProductId: pid, ProductName: pname, Price: cost, Qty:qty };  //JavaScript Object
+
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:12186/api/product",
+                contentType: "application/json; charset=utf-8",
+                data: JSON.stringify(product),
+                success: function (result) {
+                    console.log(result)
+                    alert("Added");
+                    $('#txtProdid').val('')
+                    $('#txtPName').val('');
+                    $('#txtPrice').val('');
+                    $('#txtQty').val('');
+                    LoadProductDetails();
+                },
+                error: function (jqxhr, textstatus, err) {
+                    alert("error : " + err + " : " + textstatus);
+                }
+            });
+        }
+    </script>
+
+
+</body>
+</html>
+
+
+JavaScript to JSON ---  JSON.stringify()
+JSON  to JAvaScript ---JSON.parse()
